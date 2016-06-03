@@ -248,9 +248,15 @@ class MeteorClient(EventEmitter):
             doc.update({'_id': _id})
             if selector == {}:
                 results.append(doc)
+
+            selected = True
             for key, value in selector.items():
-                if key in doc and doc[key] == value:
-                    results.append(doc)
+                if not doc.get(key) == value:
+                    selected = False
+
+            if selected:
+                results.append(doc)
+
         return results
 
     def find_one(self, collection, selector={}):
@@ -265,9 +271,14 @@ class MeteorClient(EventEmitter):
             doc.update({'_id': _id})
             if selector == {}:
                 return doc
+
+            selected = True
             for key, value in selector.items():
-                if key in doc and doc[key] == value:
-                    return doc
+                if not doc.get(key) == value:
+                    selected = False
+
+            if selected:
+                return doc
         return None
 
     def insert(self, collection, doc, callback=None):
