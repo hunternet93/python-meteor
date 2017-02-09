@@ -248,6 +248,7 @@ class MeteorClient(EventEmitter):
             doc.update({'_id': _id})
             if selector == {}:
                 results.append(doc)
+                continue
 
             selected = True
             for key, value in selector.items():
